@@ -1,7 +1,6 @@
 #!/bin/sh
 
-CGIT_VARS='$CGIT_TITLE:$CGIT_DESC:$CGIT_VROOT:$CGIT_SECTION_FROM_STARTPATH'
-
-envsubst "$CGIT_VARS" < /etc/cgitrc.template > /etc/cgitrc
-
-apachectl -DFOREGROUND
+pushd /code && {
+    [ -f dbinit.py ] && python dbinit.py
+    /usr/bin/uwsgi --uwsgi-socket 0.0.0.0:3031 --chdir /code --wsgi-file service.py --master --processes 2
+}
