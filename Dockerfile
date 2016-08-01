@@ -1,4 +1,4 @@
-FROM centos:latest
+FROM w3.fengsitech.com:5000/centos:7
 MAINTAINER Hao Luo, luohao.brian@gmail.com
 LABEL name="Webpy Image" \
     vendor="Fensitech" \
@@ -11,7 +11,8 @@ ADD base.repo /etc/yum.repos.d/base.repo
 ADD epel.repo /etc/yum.repos.d/epel.repo
 RUN yum -y update && \
     yum install -y python-pip libffi-devel python-devel python-setuptools \
-                   gcc swig libxml2-devel libxslt-devel libjpeg-turbo-devel openssl-devel && \
+                   gcc swig libxml2-devel libxslt-devel libjpeg-turbo-devel \
+                   openssl-devel && \
     yum clean all
 
 # Install all prerequisite python packages
@@ -25,6 +26,7 @@ RUN SWIG_FEATURES="-cpperraswarn -includeall -I/usr/include/openssl" pip install
                 cryptography==0.9 \
                 pycurl==7.19.0 \
                 uwsgi \
+                redis \
                 Pillow \
                 lxml \
                 PyMySQL \
@@ -40,13 +42,17 @@ RUN chmod +x /sbin/startup.sh
 
 # upload dir
 RUN mkdir /code
-VOLUME ["/code"]
+RUN mkdir /var/log/code
+VOLUME ["/code", "/var/log/code"]
 
 EXPOSE 3031
 
 ENV DB_HOST "mysql"
 ENV DB_PASSWORD "root"
 ENV DB_USER "root"
-ENV DB_NAME "phonecms5"
+ENV DB_NAME "phonecms2015"
+ENV REDIS_HOST "redis"
+ENV REDIS_PORT "6379"
+ENV REDIS_DB "0"
 
 CMD ["/sbin/dumb-init", "/sbin/startup.sh"]
