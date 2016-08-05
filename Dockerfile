@@ -25,6 +25,8 @@ RUN SWIG_FEATURES="-cpperraswarn -includeall -I/usr/include/openssl" pip install
                 peewee==2.5.1 \
                 cryptography==0.9 \
                 pycurl==7.19.0 \
+                beautifulsoup4 \
+                qrcode \
                 uwsgi \
                 redis \
                 Pillow \
