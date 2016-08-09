@@ -1,4 +1,4 @@
-FROM w3.fengsitech.com:5000/centos:7
+FROM registry.fengsitech.com/centos:7
 MAINTAINER Hao Luo, luohao.brian@gmail.com
 LABEL name="Webpy Image" \
     vendor="Fensitech" \
@@ -25,7 +25,6 @@ RUN SWIG_FEATURES="-cpperraswarn -includeall -I/usr/include/openssl" pip install
                 peewee==2.5.1 \
                 cryptography==0.9 \
                 pycurl==7.19.0 \
-                beautifulsoup4 \
                 qrcode \
                 uwsgi \
                 redis \
